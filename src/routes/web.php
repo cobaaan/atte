@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AtteController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,3 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
+
+Route::get('/login', [AtteController::class, 'login']);
+
+Route::get('/date', [AtteController::class, 'date'])->middleware(['auth', 'verified']);
+Route::get('/stamp', [AtteController::class, 'stamp']);
+
+//Route::post('/register', [AtteController::class, 'date']);

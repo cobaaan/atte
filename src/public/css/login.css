@@ -1,0 +1,47 @@
+.login {
+    width: 30%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 2vh 0 5vh;
+}
+
+.login__ttl {
+    font-size: 2.5rem;
+    color: #333333;
+}
+
+.login__input {
+    font-size: 1.5rem;
+    color: #777;
+    width: 100%;
+    background-color: #eee;
+    border: 2px solid #777;
+    border-radius: 3px;
+    padding: 1vh 0 1vh;
+    margin: 1.5vh 0 1.5vh;
+    text-indent: 2vw;
+}
+
+.login__btn {
+    font-size: 1.5rem;
+    color: white;
+    width: 100%;
+    background-color: blue;
+    border-radius: 3px;
+    padding: 1vh 0 1vh;
+    border: none;
+    margin: 1.5vh 0 1.5vh;
+}
+
+.login__txt {
+    font-size: 1.2rem;
+    color: #777;
+    margin: 1vh 0 0 0;
+}
+
+.login__register {
+    font-size: 1.2rem;
+    color: blue;
+    margin: -2vh 0 0 0;
+    text-decoration: none;
+}

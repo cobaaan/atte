@@ -1,0 +1,57 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__right {
+    width: 25%;
+}
+
+.header__right--content {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 5vw;
+    margin-top: 8px;
+}
+
+.header__tag {
+    font-size: 1.6rem;
+    background-color: white;
+    border: none;
+}
+
+
+
+.body__top {
+    text-align: center;
+}
+
+.body__middle {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.body__middle table {
+    width: 100%;
+    margin: 4vh auto 4vh;
+
+}
+
+.body__middle tr {
+    border-top: 0.5px solid #777;
+    font-size: 1.6rem;
+}
+
+.body__middle th {
+    text-align: left;
+    padding: 2vh 0 2vh 0;
+}
+
+.body__middle td {
+    padding: 2vh 0 2vh 0;
+}
+
+.body__bottom {
+    text-align: center;
+}
