@@ -27,6 +27,23 @@
     text-align: center;
 }
 
+.body__top--table {
+    width: 20%;
+    margin: 0 auto;
+}
+
+.body__top--form-txt {
+    font-size: 2rem;
+}
+
+.body__top--form-btn {
+    width: 30px;
+    height: 20px;
+    background-color: white;
+    color: blue;
+    border: 0.5px solid blue;
+}
+
 .body__middle {
     width: 90%;
     margin: 0 auto;

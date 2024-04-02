@@ -2,6 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/login.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/verify.css') }}" />
 @endsection
 
 @section('content')
@@ -15,14 +16,20 @@
 <div class="body">
     <div class="login">
         <h2 class="login__ttl">メール認証</h2>
-        <p>確認のメールを送りました。<br>メッセージ内の確認ボタンを押してください。</p>
-        <p>メールが届かない場合は下のボタンを押してください。</p>
+        <p class="verify__txt send">確認のメールを送りました。<br>メッセージ内の確認ボタンを押してください。</p>
+        <p class="verify__txt resend">メールが届かない場合は下のボタンを押してください。</p>
         <form action="{{ route('verification.send') }}" method="post">
             @csrf
-            <button>再送信</button>
+            <button class="verify__btn">再送信</button>
         </form>
         <div>
-            <a class="login__register" href="/register">会員登録</a>
+            <p class="verify__txt reregister">アカウントの登録し直しはこちらから</p>
+            <form action="/logout" method="post">
+                @csrf
+                <div>
+                    <button class="verify__btn">ログアウト</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

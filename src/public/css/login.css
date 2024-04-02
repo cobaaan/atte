@@ -45,3 +45,12 @@
     margin: -2vh 0 0 0;
     text-decoration: none;
 }
+
+.message__error {
+    font-size: 1.5rem;
+    color: white;
+    display: inline;
+    padding: 1vh 2vw 1vh 2vw;
+    border-radius: 3px;
+    background-color: #f0908d;
+}

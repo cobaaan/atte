@@ -47,10 +47,11 @@
 .body__btn--content-item {
     width: 45%;
     height: calc(100vw / 8);
-    background-color: white;
+    background-color: #ccc;
     border-radius: 3px;
     margin: 30px 30px 30px 30px;
     text-align: center;
+    display: inline;
 }
 
 .body__btn--content-btn {

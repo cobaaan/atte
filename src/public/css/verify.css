@@ -1,0 +1,28 @@
+p {
+    font-size: 1.5rem;
+}
+
+.verify__btn {
+    font-size: 1.5rem;
+    color: blue;
+    margin: -5vh 0 0 0;
+    text-decoration: none;
+    border: none;
+}
+
+.verify__txt {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.send {
+    margin-top: 2vh;
+}
+
+.resend {
+    margin-top: 5vh;
+}
+
+.reregister {
+
+}

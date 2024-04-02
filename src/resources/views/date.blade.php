@@ -14,10 +14,10 @@
             @csrf
             <div class="header__right--content">
                 <div>
-                    <button class="header__tag" formaction="">ホーム</button>
+                    <button class="header__tag" formaction="/stamp">ホーム</button>
                 </div>
                 <div>
-                    <button class="header__tag" formaction="">日付一覧</button>
+                    <button class="header__tag" formaction="/date">日付一覧</button>
                 </div>
                 <div>
                     <button class="header__tag" formaction="/logout">ログアウト</button>
@@ -29,8 +29,43 @@
 
 <div class="body">
     <div class="body__top">
-        <p>< date ></p>
+        <form action="?" method="post">
+            @csrf
+            <input type="hidden" name="dt" value="{{ $dt }}" readonly>
+            <table class="body__top--table">
+                <tr>
+                    <td>
+                        <button class="body__top--form-btn" formaction="/sub_date"><</button>
+                    </td>
+                    <td>
+                        <p class="body__top--form-txt">{{ $dt->format('Y-m-d') }}</p>
+                    </td>
+                    <td>
+                        <button class="body__top--form-btn" formaction="/add_date">></button>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
+    
+    @if(isset($param))
+    <p>{{ $param['name'] }}</p>
+    <p>{{ $param['work_start'] }}</p>
+    <p>{{ $param['work_end'] }}</p>
+    <p>{{ $param['work_hours'].':'.$param['work_minutes'].':'.$param['work_seconds'] }}</p>
+    
+    <table>
+        @foreach ($param as $item)
+        <tr>
+            <td>
+                
+                
+            </td>
+        </tr>
+        
+        @endforeach
+    </table>
+    @endif
     
     <div class="body__middle">
         <table>
