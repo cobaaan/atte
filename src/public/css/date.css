@@ -25,6 +25,12 @@
 
 .body__top {
     text-align: center;
+    padding: 2vh 0 2vh 0;
+}
+
+.body__top--txt {
+    font-size: 2.5rem;
+    color: #454545;
 }
 
 .body__top--table {
@@ -70,5 +76,13 @@
 }
 
 .body__bottom {
+    width: 80%;
+    margin: 0 auto;
+    padding: 2vh 0 2vh 0;
     text-align: center;
+}
+
+.body__bottom--paginate {
+    width: 100%;
+    font-size: 1.6rem;
 }

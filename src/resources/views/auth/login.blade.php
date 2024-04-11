@@ -19,9 +19,15 @@
             @csrf
             <div>
                 <input class="login__input" type="email" name="email" placeholder="メールアドレス">
+                @if($errors->has('email'))
+                <div class="message__error">{{ $errors->first('email') }}</div>
+                @endif
             </div>
             <div>
                 <input class="login__input" type="password" name="password" placeholder="パスワード">
+                @if($errors->has('password'))
+                <div class="message__error">{{ $errors->first('password') }}</div>
+                @endif
             </div>
             <div>
                 <button class="login__btn">ログイン</button>

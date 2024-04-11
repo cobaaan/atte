@@ -4,16 +4,40 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 use App\Models\User;
 use App\Models\Date;
 use App\Models\Time;
-
+use Illuminate\Support\Facades\DB;
 use Auth;
 
 use Carbon\Carbon;
 
 class AtteController extends Controller
-{
+{    
+    public function userList(){
+        $users = User::all();
+        return view('user_list', compact('users'));
+    }
+    
+    public function attendanceRecord(Request $request){
+        //$dates = Date::all();
+        $user_name = DB::table("users")
+        ->where('id', $request->id)
+        ->select('name')
+        ->get();
+        $user_id = $request->id;
+        //dd($user_name[0]->name);
+        /*
+        $dates = DB::table("dates")
+        ->where('user_id', $request->id)
+        ->get();
+        */
+        
+        $dates = Date::all();
+        return view('attendance_record', compact('dates', 'user_name', 'user_id'));
+    }
+    
     public function login(){
         return view('auth/login');
     }
@@ -23,163 +47,169 @@ class AtteController extends Controller
     }
     
     public function date(Request $request){
+        $users = User::all();
+        
         if($request->date == null) {
             $dt = Carbon::now();
         }
         $dt = Carbon::now();
-        /*
-        else {
-            if($request->num < 0){
-                $dt = Carbon::now();
-                $dt = $dt->subDays()->format('Y-m-d');
-            }
-            else if($request->num > 0){
-                $dt = Carbon::now();
-                $dt = $dt->addDays()->format('Y-m-d');
-            }
-        }
-        */
-        return view('date', compact('dt'));
+        
+        $dates = Date::whereDate('date', $dt->format('Y-m-d'))->paginate(5);
+        
+        return view('date', compact('dt', 'dates', 'users'));
     }
     
     public function subDate(Request $request) {
+        $users = User::all();
+        
         $dt = Carbon::createFromTimeString($request->dt);
         $dt = $dt->subDays();
         
-        return view('date', compact('dt'));
+        $dates = Date::whereDate('date', $dt->format('Y-m-d'))->paginate(5);
+        
+        return view('date', compact('dt', 'dates', 'users'));
     }
     
     public function addDate(Request $request) {
-        $dt = Carbon::createFromTimeString($request->dt);
-        $dates = Date::all();
+        $users = User::all();
         
+        $dt = Carbon::createFromTimeString($request->dt);
         $dt = $dt->addDays();
         
-        $param = $this->searchDate($dt);
+        $dates = Date::whereDate('date', $dt->format('Y-m-d'))->paginate(5);
         
-        
-        return view('date', compact('dt', 'param', 'dates'));
+        return view('date', compact('dt', 'dates', 'users'));
     }
-    
-    
-    private function searchDate($dt) {
-        $users = User::all();
-        /*
-        $dates = Date::whereDate('work_start', $dt->format('Y-m-d'))->where('user_id', 1)->get();
-        $datesWorkStart = Carbon::createFromTimeString($dates[0]['work_start']);
-        dd($dates[0]['work_start']);
-        */
-        for($i = 0; $i < count($users); $i++){
-            $dates[$i] = Date::whereDate('work_start', $dt->format('Y-m-d'))->where('user_id', ($i + 1))->get();
-            $datesWorkStart = Carbon::createFromTimeString($dates[0]['work_start']);
-            dd($dates[0]['work_start']);
-            //$datesWorkStart[$i] = Carbon::createFromTimeString($dates[1]['work_start']);
-            /*
-            $param[$i] = [
-                'name' => $users[$i]['name'],
-                'dates' => $dates[$i]['work_start'],
-            ];
-            */
-        }
-        dd($dates);
-        
-        
-        
-        $dates = Date::whereDate('work_start', $dt->format('Y-m-d'))->where('user_id', 1)->get();
-        $datesWorkStart = Carbon::createFromTimeString($dates[0]['work_start']);
-        $datesWorkEnd = Carbon::createFromTimeString($dates[0]['work_end']);
-        //$datesWorkTime = date_diff($datesWorkStart, $datesWorkEnd);
-        
-        $datesWorkTime = $datesWorkStart->diffInSeconds($datesWorkEnd);
-        $hours = floor($datesWorkTime / 3600);
-        $hour = sprintf("%02d",$hours);
-        $minutes = floor(($datesWorkTime % 3600) / 60);
-        $minute = sprintf("%02d",$minutes);
-        $seconds = $datesWorkTime % 60;
-        $second = sprintf("%02d",$seconds);
-        
-        //$times = Time::whereDate('break_start', $dt->format('Y-m-d'))->where('user_id', 1)->get();
-        
-        //DD($times);
-        $param = [
-            'name' => $users[0]['name'],
-            'work_start' => $datesWorkStart->format('H:i:s'),
-            'work_end' => $datesWorkEnd->format('H:i:s'),
-            'work_hours' => $hour,
-            'work_minutes' => $minute,
-            'work_seconds' => $second,
-            //'work_time' => $datesWorkTime->format('H:i:s'),
-        ];
-        //DD($param);
-        return($param);
-    }
-    
-    
     
     public function stamp(){
         $auths = Auth::user();
         $dt = Carbon::now();
         
-        $isCreated = $this->checkWork();
-        
-        return view('stamp', compact('auths', 'isCreated'));
+        $checkAttendance = $this->checkAttendance();
+        //dd($param);
+        return view('stamp', compact('auths', 'checkAttendance'));
     }
     
     public function workStart() {
         $auths = Auth::user();
         $dt = Carbon::now();
-        //$isCreated = $this->checkWork();
         $param = [
             'user_id' => $auths->id,
-            'work_start' => $dt,
+            'date' => $dt->format('Y-m-d'),
+            'work_start' => $dt->format('H:i:s'),
         ];
         Date::create($param);
+        $checkAttendance = $this->checkAttendance();
         
-        return view('stamp', compact('auths'));
+        return view('stamp', compact('auths', 'checkAttendance'));
     }
     
     public function workEnd() {
         $auths = Auth::user();
         $dt = Carbon::now();
-        //$isCreated = $this->checkWork();
         Date::where('user_id', $auths->id)->latest()->first()->update([
-            'work_end' => $dt,
+            'work_end' => $dt->format('H:i:s'),
         ]);
         
-        return view('stamp', compact('auths'));
+        $checkAttendance = $this->checkAttendance();
+        
+        return view('stamp', compact('auths', 'checkAttendance'));
     }
     
     public function breakStart(){
         $auths = Auth::user();
         $dt = Carbon::now();
+        $dates = Date::all();
+        $dates = Date::where('user_id', $auths->id)->whereDate('date', $dt->format('Y-m-d'))->latest()->first();
         $param = [
-            'user_id' => $auths->id,
+            'date_id' => $dates->id,
             'break_start' => $dt,
+            'break_end' => $dt,
         ];
         Time::create($param);
+        $checkAttendance = $this->checkAttendance();
         
-        return view('stamp', compact('auths'));
+        return view('stamp', compact('auths', 'checkAttendance'));
     }
     
     public function breakEnd() {
         $auths = Auth::user();
         $dt = Carbon::now();
-        //$isCreated = $this->checkWork();
-        Time::where('user_id', $auths->id)->latest()->first()->update([
+        $dates = Date::all();
+        $dates = Date::where('user_id', $auths->id)->whereDate('date', $dt->format('Y-m-d'))->latest()->first();
+        Time::where('date_id', $dates->id)->latest()->first()->update([
             'break_end' => $dt,
         ]);
+        $checkAttendance = $this->checkAttendance();
         
-        return view('stamp', compact('auths'));
+        return view('stamp', compact('auths', 'checkAttendance'));
     }
     
     
     
-    private function checkWork(){
+    private function checkAttendance(){
         $auths = Auth::user();
         $dt = Carbon::now();
         
-        $isCreated = Date::whereDate('created_at', $dt->format('Y-m-d'))->where('user_id', $auths->id)->get();
+        $dates = Date::whereDate('created_at', $dt->format('Y-m-d'))->where('user_id', $auths->id)->latest()->first();
         
-        return($isCreated);
+        if(isset($dates)){
+            $times = Time::where('date_id', $dates->id)->latest()->first();
+            
+            if(isset($times)){
+                if($times->break_start === $times->break_end){
+                    $isBreakStart = "NotNull";
+                    $isBreakEnd = null;
+                }
+                else{
+                    $isBreakStart = null;
+                    $isBreakEnd = null;
+                }
+            }
+            else{
+                $isBreakStart = null;
+                $isBreakEnd = null;
+            }
+        }
+        else{
+            $isBreakStart = null;
+            $isBreakEnd = null;
+        }
+        
+        if(isset($dates->work_start)){
+            $isWorkStart = "NotNull";
+        }
+        else{
+            $isWorkStart = null;
+        }
+        if(isset($dates->work_end)){
+            $isWorkEnd = "NotNull";
+            $isWorkStart = "NotNull";
+        }
+        else{
+            $isWorkEnd = null;
+        }
+        
+        if(isset($isWorkStart) && isset($isWorkEnd)){
+            $checkAttendance = 1;
+        }
+        else if(!isset($isWorkStart) && !isset($isWorkEnd)){
+            $checkAttendance = 1;
+        }
+        
+        if(isset($isWorkStart) && !isset($isWorkEnd)){
+            if(isset($isBreakStart) && isset($isBreakEnd)){
+                $checkAttendance = 2;
+            }
+            else if(!isset($isBreakStart) && !isset($isBreakEnd)){
+                $checkAttendance = 2;
+            }
+        }
+        
+        if(isset($isWorkStart) && !isset($isWorkEnd) && isset($isBreakStart) && !isset($isBreakEnd)){
+            $checkAttendance = 3;
+        }
+        
+        return($checkAttendance);
     }
 }

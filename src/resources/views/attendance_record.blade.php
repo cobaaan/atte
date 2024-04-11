@@ -29,23 +29,7 @@
 
 <div class="body">
     <div class="body__top">
-        <form action="?" method="get">
-            @csrf
-            <input type="hidden" name="dt" value="{{ $dt }}" readonly>
-            <table class="body__top--table">
-                <tr>
-                    <td>
-                        <button class="body__top--form-btn" formaction="/sub_date"><</button>
-                    </td>
-                    <td>
-                        <p class="body__top--form-txt">{{ $dt->format('Y-m-d') }}</p>
-                    </td>
-                    <td>
-                        <button class="body__top--form-btn" formaction="/add_date">></button>
-                    </td>
-                </tr>
-            </table>
-        </form>
+        <h2 class="body__top--txt">{{ $user_name[0]->name }}</h2>
     </div>
     
     
@@ -53,7 +37,7 @@
     <div class="body__middle">
         <table>
             <tr>
-                <th>名前</th>
+                <th>日付</th>
                 <th>勤務開始</th>
                 <th>勤務終了</th>
                 <th>休憩時間</th>
@@ -63,11 +47,10 @@
             @if(isset($dates))
             @foreach($dates as $date)
             <tr>
-                <td>{{ $date->getUserName() }}</td>
-                <td>{{ $date->getWorkStart() }}</td>
-                <td>{{ $date->getWorkEnd() }}</td>
-                <td>{{ $date->getUserId() }}</td>
-                <td>{{ $date->getWorkHour() . ":" . $date->getWorkMinute() . ":" . $date->getWorkSecond() }}</td>
+                <td>{{ $date->created_at }}</td>
+                <td>{{ $date->work_start }}</td>
+                <td>{{ $date->work_end }}</td>
+                <td>{{ $date->getDate($user_id) }}</td>
             </tr>
             @endforeach
             @endif
@@ -78,7 +61,7 @@
     
     <div class="body__bottom">
         @if(isset($dates))
-        <div class="body__bottom--paginate">{{$dates->appends(request()->query())->links('vendor.pagination.semantic-ui')}}</div>
+        
         @endif
     </div>
 </div>
