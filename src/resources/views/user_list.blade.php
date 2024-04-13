@@ -10,7 +10,7 @@
         <a class="header__ttl" href="">Atte</a>
     </div>
     <div class="header__right">
-        <form action="?" method="post">
+        <form action="?" method="get">
             @csrf
             <div class="header__right--content">
                 <div>
@@ -20,7 +20,10 @@
                     <button class="header__tag" formaction="/attendance">日付一覧</button>
                 </div>
                 <div>
-                    <button class="header__tag" formaction="/logout">ログアウト</button>
+                    <button class="header__tag" formaction="/user_list">ユーザー 一覧</button>
+                </div>
+                <div>
+                    <button class="header__tag" formaction="/logout" formmethod="post">ログアウト</button>
                 </div>
             </div>
         </form>
@@ -38,15 +41,15 @@
         <table>
             <tr>
                 <th>名前</th>
-                <th></th>
+                <th class="body__middle--detail">詳細</th>
             </tr>
             
             @if(isset($users))
             @foreach($users as $user)
             <tr>
                 <td>{{ $user->name }}</td>
-                <td>
-                    <form action="/attendance_record" method="post">
+                <td class="body__middle--detail">
+                    <form action="/attendance_record" method="get">
                         @csrf
                         <input type="hidden" name="id" value={{ $user->id }}>
                         <button>詳細</button>
@@ -61,8 +64,8 @@
     </div>
     
     <div class="body__bottom">
-        @if(isset($dates))
-        
+        @if(isset($users))
+        <div class="body__bottom--paginate">{{$users->appends(request()->query())->links('vendor.pagination.semantic-ui')}}</div>
         @endif
     </div>
 </div>

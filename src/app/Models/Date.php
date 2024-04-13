@@ -17,15 +17,13 @@ class Date extends Model
         return $this->belongsTo(User::class);
     }
     
-    public function getDate($user_id){
-        $dates = DB::table("dates")
-        ->where('user_id', $user_id)
-        ->get();
+    public function getDate(){
         
-        return($dates->date);
+        
+        return $this->created_at;
     }
     
-    public function getUserId(){
+    public function getBreakTime(){
         $times = DB::table('times')
         ->where('date_id', $this->id)
         ->select('date_id')

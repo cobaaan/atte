@@ -16,25 +16,19 @@ use Carbon\Carbon;
 class AtteController extends Controller
 {    
     public function userList(){
-        $users = User::all();
+        $users = User::orderBy('created_at')->paginate(5);
         return view('user_list', compact('users'));
     }
     
     public function attendanceRecord(Request $request){
-        //$dates = Date::all();
         $user_name = DB::table("users")
         ->where('id', $request->id)
         ->select('name')
         ->get();
         $user_id = $request->id;
-        //dd($user_name[0]->name);
-        /*
-        $dates = DB::table("dates")
-        ->where('user_id', $request->id)
-        ->get();
-        */
-        
-        $dates = Date::all();
+        //dd($user_id);
+        //$dates = Date::all();
+        $dates = Date::where('user_id', $user_id)->paginate(5);
         return view('attendance_record', compact('dates', 'user_name', 'user_id'));
     }
     
@@ -54,7 +48,7 @@ class AtteController extends Controller
         }
         $dt = Carbon::now();
         
-        $dates = Date::whereDate('date', $dt->format('Y-m-d'))->paginate(5);
+        $dates = Date::whereDate('created_at', $dt->format('Y-m-d'))->paginate(5);
         
         return view('date', compact('dt', 'dates', 'users'));
     }
@@ -65,7 +59,7 @@ class AtteController extends Controller
         $dt = Carbon::createFromTimeString($request->dt);
         $dt = $dt->subDays();
         
-        $dates = Date::whereDate('date', $dt->format('Y-m-d'))->paginate(5);
+        $dates = Date::whereDate('created_at', $dt->format('Y-m-d'))->paginate(5);
         
         return view('date', compact('dt', 'dates', 'users'));
     }
@@ -76,7 +70,7 @@ class AtteController extends Controller
         $dt = Carbon::createFromTimeString($request->dt);
         $dt = $dt->addDays();
         
-        $dates = Date::whereDate('date', $dt->format('Y-m-d'))->paginate(5);
+        $dates = Date::whereDate('created_at', $dt->format('Y-m-d'))->paginate(5);
         
         return view('date', compact('dt', 'dates', 'users'));
     }
@@ -86,7 +80,7 @@ class AtteController extends Controller
         $dt = Carbon::now();
         
         $checkAttendance = $this->checkAttendance();
-        //dd($param);
+        
         return view('stamp', compact('auths', 'checkAttendance'));
     }
     
@@ -95,7 +89,6 @@ class AtteController extends Controller
         $dt = Carbon::now();
         $param = [
             'user_id' => $auths->id,
-            'date' => $dt->format('Y-m-d'),
             'work_start' => $dt->format('H:i:s'),
         ];
         Date::create($param);
@@ -120,7 +113,7 @@ class AtteController extends Controller
         $auths = Auth::user();
         $dt = Carbon::now();
         $dates = Date::all();
-        $dates = Date::where('user_id', $auths->id)->whereDate('date', $dt->format('Y-m-d'))->latest()->first();
+        $dates = Date::where('user_id', $auths->id)->whereDate('created_at', $dt->format('Y-m-d'))->latest()->first();
         $param = [
             'date_id' => $dates->id,
             'break_start' => $dt,
@@ -136,7 +129,7 @@ class AtteController extends Controller
         $auths = Auth::user();
         $dt = Carbon::now();
         $dates = Date::all();
-        $dates = Date::where('user_id', $auths->id)->whereDate('date', $dt->format('Y-m-d'))->latest()->first();
+        $dates = Date::where('user_id', $auths->id)->whereDate('created_at', $dt->format('Y-m-d'))->latest()->first();
         Time::where('date_id', $dates->id)->latest()->first()->update([
             'break_end' => $dt,
         ]);

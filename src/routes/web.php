@@ -37,5 +37,5 @@ Route::post('/break_end', [AtteController::class, 'breakEnd']);
 Route::get('/sub_date', [AtteController::class, 'subDate'])->middleware(['auth', 'verified']);
 Route::get('/add_date', [AtteController::class, 'addDate'])->middleware(['auth', 'verified']);
 
-Route::post('/attendance_record', [AtteController::class, 'attendanceRecord'])->middleware(['auth', 'verified']);
+Route::get('/attendance_record', [AtteController::class, 'attendanceRecord'])->middleware(['auth', 'verified']);
 Route::get('/user_list', [AtteController::class, 'userList'])->middleware(['auth', 'verified']);

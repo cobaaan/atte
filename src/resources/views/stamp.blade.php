@@ -10,7 +10,7 @@
         <a class="header__ttl" href="">Atte</a>
     </div>
     <div class="header__right">
-        <form action="?" method="post">
+        <form action="?" method="get">
             @csrf
             <div class="header__right--content">
                 <div>
@@ -20,7 +20,10 @@
                     <button class="header__tag" formaction="/attendance">日付一覧</button>
                 </div>
                 <div>
-                    <button class="header__tag" formaction="/logout">ログアウト</button>
+                    <button class="header__tag" formaction="/user_list">ユーザー 一覧</button>
+                </div>
+                <div>
+                    <button class="header__tag" formaction="/logout" formmethod="post">ログアウト</button>
                 </div>
             </div>
         </form>
