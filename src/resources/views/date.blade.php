@@ -32,7 +32,7 @@
 
 <div class="body">
     <div class="body__top">
-        <form action="?" method="get">
+        <form action="?" method="post">
             @csrf
             <input type="hidden" name="dt" value="{{ $dt }}" readonly>
             <table class="body__top--table">

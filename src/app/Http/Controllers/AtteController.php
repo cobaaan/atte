@@ -25,9 +25,9 @@ class AtteController extends Controller
         ->where('id', $request->id)
         ->select('name')
         ->get();
+        
         $user_id = $request->id;
-        //dd($user_id);
-        //$dates = Date::all();
+        
         $dates = Date::where('user_id', $user_id)->paginate(5);
         return view('attendance_record', compact('dates', 'user_name', 'user_id'));
     }
