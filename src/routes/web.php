@@ -20,8 +20,10 @@ Route::get('/login', [AtteController::class, 'login'])->name('/login');
 Route::get('/attendance', [AtteController::class, 'date'])->middleware(['auth', 'verified']);
 Route::post('/attendance', [AtteController::class, 'date'])->middleware(['auth', 'verified']);
 
-Route::post('/sub_date', [AtteController::class, 'subDate'])->middleware(['auth', 'verified']);
+Route::get('/add_date', [AtteController::class, 'addDate'])->middleware(['auth', 'verified']);
 Route::post('/add_date', [AtteController::class, 'addDate'])->middleware(['auth', 'verified']);
+Route::get('/sub_date', [AtteController::class, 'subDate'])->middleware(['auth', 'verified']);
+Route::post('/sub_date', [AtteController::class, 'subDate'])->middleware(['auth', 'verified']);
 
 Route::get('/', [AtteController::class, 'stamp'])->middleware(['auth', 'verified']);
 Route::post('/', [AtteController::class, 'stamp'])->middleware(['auth', 'verified']);

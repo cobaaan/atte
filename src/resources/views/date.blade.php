@@ -81,7 +81,7 @@
     
     <div class="body__bottom">
         @if(isset($dates))
-        <div class="body__bottom--paginate">{{$dates->appends(request()->query())->links('vendor.pagination.semantic-ui')}}</div>
+        <div class="body__bottom--paginate">{{$dates->appends(request()->input())->links('vendor.pagination.semantic-ui')}}</div>
         @endif
     </div>
 </div>
