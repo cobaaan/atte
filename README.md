@@ -56,8 +56,8 @@ MySQL8.3.0
 
 
 ## URL　　
-  開発環境：http://localhost/
-  
-  データベース：http://localhost:8080/index.php
-　 
-  本番環境：http://atte.blog
+開発環境：http://localhost/
+
+データベース：http://localhost:8080/index.php
+
+本番環境：http://atte.blog
