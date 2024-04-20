@@ -13,7 +13,7 @@
 　　
 ### Laravel環境構築
 
-1.docker-compose exec php bash  
+1.docker-compose exec php bash    
 2.composer install  
 3.「.env.example」ファイルを 「.env」ファイルに命名を変更。または、新しく.envファイルを作成  
 4..envに以下の環境変数を追加  
@@ -44,8 +44,8 @@ MySQL8.3.0
 
 
 ## URL　　
-開発環境：http://localhost/
+  開発環境：http://localhost/
   
-データベース：http://localhost:8080/index.php
+  データベース：http://localhost:8080/index.php
 　 
-本番環境：http://atte.blog
+  本番環境：http://atte.blog
