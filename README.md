@@ -35,11 +35,9 @@ php artisan migrate
 ```
 
 ## 使用技術(実行環境)　　
-PHP8.3.3
-  
-Laravel8.83.27
-  
-MySQL8.3.0
+PHP8.3.3  
+Laravel8.83.27  
+MySQL8.3.0  
 　　
 ## ER図　　
 ![atte drawio](https://github.com/cobaaan/atte/assets/77657934/6aac3edf-32b6-48ce-9e1c-d5e428d5f02a)　　
@@ -49,5 +47,5 @@ MySQL8.3.0
 開発環境：http://localhost/
   
 データベース：http://localhost:8080/index.php
-　　
+　 
 本番環境：http://atte.blog
