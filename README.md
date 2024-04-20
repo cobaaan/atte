@@ -22,7 +22,8 @@ DB_HOST=mysql
 DB_PORT=3306
 DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
-DB_PASSWORD=laravel_pass```
+DB_PASSWORD=laravel_pass
+```
 
 5.アプリケーションキーの作成  
 php artisan key:generate  
@@ -41,7 +42,8 @@ MySQL8.3.0　　
 
 
 ## URL　　
-開発環境：http://localhost/　　
-データベース：http://localhost:8080/index.php　　
+開発環境：http://localhost/
+
+データベース：http://localhost:8080/index.php
 　　
-本番環境：http://atte.blog　　
+本番環境：http://atte.blog
