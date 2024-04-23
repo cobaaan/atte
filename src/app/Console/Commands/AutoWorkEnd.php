@@ -4,7 +4,15 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Models\User;
 use App\Models\Date;
+use App\Models\Time;
+
+use Auth;
+
 use Carbon\Carbon;
 
 class AutoWorkEnd extends Command
@@ -42,17 +50,23 @@ class AutoWorkEnd extends Command
     {
         $dt = Carbon::now();
         $subDt = $dt->subDays();
-        $auths = Auth::user();
+        
+        $dates = DB::table('dates')
+        ->whereDate('created_at', $subDt->format('Y-m-d'))
+        ->whereNull('work_end')
+        ->get();
+        
+        foreach($dates as $date){
+            $param = [
+                'user_id' => $date->user_id,
+                'work_start' => '00:00:00',
+            ];
+            Date::create($param);
+        }
         
         $dates = DB::table('dates')
         ->whereDate('created_at', $subDt->format('Y-m-d'))
         ->whereNull('work_end')
         ->update(['work_end' => '23:59:59']);
-        
-        $param = [
-            'user_id' => $auths->id,
-            'work_start' => $dt->format('H:i:s'),
-        ];
-        Date::create($param);
     }
 }

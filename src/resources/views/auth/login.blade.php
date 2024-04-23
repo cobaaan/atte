@@ -7,7 +7,7 @@
 @section('content')
 <header>
     <div>
-        <a class="header__ttl" href="">Atte</a>
+        <a class="header__ttl" href="http://atte.blog">Atte</a>
     </div>
     <div></div>
 </header>

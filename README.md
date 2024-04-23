@@ -1,6 +1,6 @@
-# アプリケーション名　　
-### Atte  
-勤怠管理アプリ  
+# アプリケーション名
+### Atte
+勤怠管理アプリ
 <img width="1823" alt="スクリーンショット 2024-04-14 19 30 12" src="https://github.com/cobaaan/atte/assets/77657934/cb4c3c73-f97a-49db-ad03-d7615e85250e">　　
 
 
@@ -28,8 +28,8 @@ http://atte.blog
 ユーザー一覧表示機能
 
 
-## 環境構築　　
-### Dockerビルド　　
+## 環境構築
+### Dockerビルド
 
 1.git clone git@github.com:estra-inc/confirmation-test-contact-form.git
 
@@ -63,7 +63,13 @@ php artisan key:generate
 6.マイグレーションの実行
 
 ```
-php artisan migrate  
+php artisan migrate
+```
+
+7.シーダーの実行
+
+```
+php artisan db:seed
 ```
 
 
@@ -76,7 +82,7 @@ MySQL8.3.0
 
 　　
 ## ER図　　
-![atte drawio](https://github.com/cobaaan/atte/assets/77657934/6aac3edf-32b6-48ce-9e1c-d5e428d5f02a)　　
+![alt text](atte.drawio.png)
 
 
 ## URL　　

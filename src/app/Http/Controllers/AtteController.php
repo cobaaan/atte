@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 use App\Models\Date;
 use App\Models\Time;
-use Illuminate\Support\Facades\DB;
+
 use Auth;
 
 use Carbon\Carbon;
+
+use App\Http\Request\RegisterRequest;
 
 class AtteController extends Controller
 {    
@@ -30,14 +32,6 @@ class AtteController extends Controller
         
         $dates = Date::where('user_id', $user_id)->paginate(5);
         return view('attendance_record', compact('dates', 'user_name', 'user_id'));
-    }
-    
-    public function login(){
-        return view('auth/login');
-    }
-    
-    public function register(){
-        return view('auth/register');
     }
     
     public function date(Request $request){
@@ -183,14 +177,11 @@ class AtteController extends Controller
             $isWorkEnd = null;
         }
         
-        if(isset($isWorkStart) && isset($isWorkEnd)){
-            $checkAttendance = 1;
-        }
-        else if(!isset($isWorkStart) && !isset($isWorkEnd)){
+        if(!isset($isWorkStart)){
             $checkAttendance = 1;
         }
         
-        if(isset($isWorkStart) && !isset($isWorkEnd)){
+        if(isset($isWorkStart)){
             if(isset($isBreakStart) && isset($isBreakEnd)){
                 $checkAttendance = 2;
             }
@@ -199,8 +190,12 @@ class AtteController extends Controller
             }
         }
         
-        if(isset($isWorkStart) && !isset($isWorkEnd) && isset($isBreakStart) && !isset($isBreakEnd)){
+        if(isset($isWorkStart) && isset($isBreakStart) && !isset($isBreakEnd)){
             $checkAttendance = 3;
+        }
+        
+        if(isset($isWorkEnd)){
+            $checkAttendance = 4;
         }
         
         return($checkAttendance);

@@ -18,8 +18,6 @@ class Date extends Model
     }
     
     public function getDate(){
-        
-        
         return $this->created_at;
     }
     
@@ -36,7 +34,19 @@ class Date extends Model
         ->pluck(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(break_end)) - SUM(TIME_TO_SEC(break_start))) AS break_time'))
         ->first();
         
-        return $breakTimes;
+        if(isset($breakTimes)){
+            if($breakTimes === "00:00:00") {
+                $breakTime = "-- : -- : --";
+            }
+            else {
+                $breakTime = $breakTimes;
+            }
+        }
+        else {
+            $breakTime = "-- : -- : --";
+        }
+        
+        return $breakTime;
     }
     
     public function getUserName(){
@@ -52,7 +62,14 @@ class Date extends Model
     }
     
     public function getWorkEnd(){
-        return $this->work_end;
+        if(isset($this->work_end)){
+            $work_end = $this->work_end;
+        }
+        else {
+            $work_end = "-- : -- : --";
+        }
+        
+        return $work_end;
     }
     
     public function getWorkHour(){

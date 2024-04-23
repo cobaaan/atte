@@ -7,7 +7,7 @@
 @section('content')
 <header class="header">
     <div class="header__left">
-        <a class="header__ttl" href="">Atte</a>
+        <a class="header__ttl" href="http://atte.blog">Atte</a>
     </div>
     <div class="header__right">
         <form action="?" method="get">
@@ -44,28 +44,28 @@
                     <div class="body__btn--content-item">
                         @if($checkAttendance === 1)
                         <button class="body__btn--content-btn" formaction="/work_start">勤務開始</button>
-                        @elseif($checkAttendance === 2 || $checkAttendance === 3)
+                        @elseif($checkAttendance === 2 || $checkAttendance === 3 || $checkAttendance === 4)
                         <button class="body__btn--content-btn" formaction="/work_start" disabled>勤務開始</button>
                         @endif
                     </div>
                     <div class="body__btn--content-item">
                         @if($checkAttendance === 2)
                         <button class="body__btn--content-btn" formaction="/work_end">勤務終了</button>
-                        @elseif($checkAttendance === 1 || $checkAttendance === 3)
+                        @elseif($checkAttendance === 1 || $checkAttendance === 3 || $checkAttendance === 4)
                         <button class="body__btn--content-btn" formaction="/work_end" disabled>勤務終了</button>
                         @endif
                     </div>
                     <div class="body__btn--content-item">
                         @if($checkAttendance === 2)
                         <button class="body__btn--content-btn" formaction="/break_start">休憩開始</button>
-                        @elseif($checkAttendance === 1 || $checkAttendance === 3)
+                        @elseif($checkAttendance === 1 || $checkAttendance === 3 || $checkAttendance === 4)
                         <button class="body__btn--content-btn" formaction="/break_start" disabled>休憩開始</button>
                         @endif
                     </div>
                     <div class="body__btn--content-item">
                         @if($checkAttendance === 3)
                         <button class="body__btn--content-btn" formaction="/break_end">休憩終了</button>
-                        @elseif($checkAttendance === 1 || $checkAttendance === 2)
+                        @elseif($checkAttendance === 1 || $checkAttendance === 2 || $checkAttendance === 4)
                         <button class="body__btn--content-btn" formaction="/break_end" disabled>休憩終了</button>
                         @endif
                     </div>
