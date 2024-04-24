@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         //$schedule->command('command:AutoAttendance')->dailyAt('0:00');
-        $schedule->command('command:AutoAttendance')->dailyAt('19:00');
+        $schedule->command('command:AutoAttendance')->dailyAt('22:10');
     }
     
     /**
