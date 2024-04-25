@@ -48,6 +48,7 @@ class AutoWorkEnd extends Command
     */
     public function handle()
     {
+        /*
         $dt = Carbon::now();
         $subDt = $dt->subDays();
         
@@ -66,6 +67,29 @@ class AutoWorkEnd extends Command
         
         $dates = DB::table('dates')
         ->whereDate('created_at', $subDt->format('Y-m-d'))
+        ->whereNull('work_end')
+        ->update(['work_end' => '23:59:59']);
+        */
+        
+        
+        
+        $dt = Carbon::now();
+        
+        $dates = DB::table('dates')
+        ->whereDate('created_at', $dt->format('Y-m-d'))
+        ->whereNull('work_end')
+        ->get();
+        
+        foreach($dates as $date){
+            $param = [
+                'user_id' => $date->user_id,
+                'work_start' => '00:00:00',
+            ];
+            Date::create($param);
+        }
+        
+        $dates = DB::table('dates')
+        ->whereDate('created_at', $dt->format('Y-m-d'))
         ->whereNull('work_end')
         ->update(['work_end' => '23:59:59']);
     }
