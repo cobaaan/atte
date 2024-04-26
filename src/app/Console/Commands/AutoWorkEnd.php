@@ -55,7 +55,6 @@ class AutoWorkEnd extends Command
         ->whereDate('created_at', $subDt->format('Y-m-d'))
         ->whereNull('work_end')
         ->get();
-        
         foreach($dates as $date){
             $param = [
                 'user_id' => $date->user_id,
@@ -65,7 +64,7 @@ class AutoWorkEnd extends Command
         }
         
         $dates = DB::table('dates')
-        ->whereDate('created_at', $subDt->format('Y-m-d'))
+        ->whereDate('created_at', $dt->format('Y-m-d'))
         ->whereNull('work_end')
         ->update(['work_end' => '23:59:59']);
     }
